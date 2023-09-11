@@ -46,6 +46,9 @@ class Property_Listings_Plugin_Activator {
             dbDelta($sql);
         }
 
+        // ensure our endpoint is added before flushing rewrite rules
+        custom_add_gallery_endpoint();
+
         flush_rewrite_rules();
 	}
 

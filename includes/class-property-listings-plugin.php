@@ -173,6 +173,12 @@ class Property_Listings_Plugin {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        $this->loader->add_action('init', $plugin_public, 'custom_add_gallery_endpoint' );
+
+        $this->loader->add_filter('request', $plugin_public, 'custom_set_gallery_query_var');
+
+        $this->loader->add_filter('template_include', $plugin_public, 'custom_gallery_template' );
+
         $this->loader->add_action('init', $plugin_public, 'custom_register_property_post_type' );
 
         $this->loader->add_action('wp', $plugin_public, 'custom_schedule_property_email' );
@@ -183,7 +189,7 @@ class Property_Listings_Plugin {
 
         $this->loader->add_action('save_post', $plugin_public, 'custom_save_property_metabox_data' );
 
-	}
+    }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.

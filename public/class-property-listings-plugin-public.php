@@ -322,4 +322,41 @@ class Property_Listings_Plugin_Public {
         }
     }
 
+    /**
+     * Add a new endpoint 'gallery' to property permalinks and render custom template.
+     *
+     * @since    1.0.0
+     */
+    public function custom_add_gallery_endpoint() {
+        error_log('Adding gallery endpoint');
+        add_rewrite_endpoint('gallery', EP_PERMALINK);
+    }
+
+    /**
+     * Set query var 'gallery'.
+     *
+     * @since    1.0.0
+     */
+    public function custom_set_gallery_query_var($vars) {
+        if (isset($vars['gallery'])) {
+            $vars['gallery'] = true;
+        }
+        return $vars;
+    }
+
+    /**
+     * Filter to render custom gallery template when 'gallery' endpoint is accessed.
+     *
+     * @since    1.0.0
+     */
+    public function custom_gallery_template($template) {
+        error_log(get_query_var());
+        if (is_singular() && get_query_var('gallery')) {
+            // Check if the 'gallery' endpoint is requested
+            $template = plugin_dir_path(__FILE__) . 'public/partials/gallery-template.php';
+            error_log($template);
+        }
+        return $template;
+    }
+
 }
