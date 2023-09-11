@@ -28,5 +28,47 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+	$(document).ready(function() {
+		$('.custom-gallery').on('init', function (event, slick) {
+			$('.custom-gallery').css('visibility', 'visible');
+		});
+
+		$('.custom-gallery').slick({
+			dots: false,
+			arrows: true,
+			infinite: true,
+			autoplay: false,
+			speed: 200,
+			cssEase:'ease-out',
+			slidesToScroll: 1,
+			slidesToShow: 3,
+			prevArrow: $('.slick-prev'),
+			nextArrow: $('.slick-next'),
+			mobileFirst: true,
+			responsive: [
+				{
+					breakpoint: 768,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1,
+					}
+				},
+				{
+					breakpoint: 480,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1,
+					}
+				},
+				{
+					breakpoint: 320,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+					}
+				}
+			]
+		});
+	});
 
 })( jQuery );

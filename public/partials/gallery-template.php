@@ -27,15 +27,21 @@ if (have_posts()) :
         ));
 
         if ($attachments) :
+            echo '<div class="gallery-slider-container">';
             echo '<div class="custom-gallery">';
             foreach ($attachments as $attachment) :
                 $image_url = wp_get_attachment_image_url($attachment->ID, 'large'); // Change 'large' to the desired image size
                 $image_caption = esc_html($attachment->post_excerpt);
 
+                echo '<div class="gallery-slide">';
                 echo '<a href="' . $image_url . '" title="' . $image_caption . '" rel="gallery">';
                 echo '<img src="' . $image_url . '" alt="' . $image_caption . '">';
                 echo '</a>';
+                echo '</div>';
             endforeach;
+            echo '</div>';
+            echo '<button type="button" class="slick-prev" aria-label="Previous" role="button">Previous</button>';
+            echo '<button type="button" class="slick-next" aria-label="Next" role="button">Next</button>';
             echo '</div>';
         endif;
     endwhile;
