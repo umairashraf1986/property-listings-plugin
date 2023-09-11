@@ -73,6 +73,7 @@ class Property_Listings_Plugin_Public {
 		 * class.
 		 */
 
+		wp_enqueue_style( 'slick-styles', plugin_dir_url( __DIR__ ) . 'slick/slick.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/property-listings-plugin-public.css', array(), $this->version, 'all' );
 
 	}
@@ -96,6 +97,7 @@ class Property_Listings_Plugin_Public {
 		 * class.
 		 */
 
+		wp_enqueue_script( 'slick-scripts', plugin_dir_url( __DIR__ ) . 'slick/slick.min.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/property-listings-plugin-public.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -328,8 +330,8 @@ class Property_Listings_Plugin_Public {
      * @since    1.0.0
      */
     public function custom_add_gallery_endpoint() {
-        error_log('Adding gallery endpoint');
         add_rewrite_endpoint('gallery', EP_PERMALINK);
+        flush_rewrite_rules();
     }
 
     /**
@@ -350,11 +352,9 @@ class Property_Listings_Plugin_Public {
      * @since    1.0.0
      */
     public function custom_gallery_template($template) {
-        error_log(get_query_var());
         if (is_singular() && get_query_var('gallery')) {
             // Check if the 'gallery' endpoint is requested
-            $template = plugin_dir_path(__FILE__) . 'public/partials/gallery-template.php';
-            error_log($template);
+            $template = plugin_dir_path(__FILE__) . 'partials/gallery-template.php';
         }
         return $template;
     }
