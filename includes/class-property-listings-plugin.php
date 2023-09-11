@@ -177,7 +177,7 @@ class Property_Listings_Plugin {
 
         $this->loader->add_action('wp', $plugin_public, 'custom_schedule_property_email' );
 
-        $this->loader->add_action( 'custom_send_property_email_hook', $plugin_public, 'custom_send_property_email' );
+        $this->loader->add_action( 'custom_send_property_email', $plugin_public, 'custom_send_property_email' );
 
         $this->loader->add_action('add_meta_boxes', $plugin_public, 'custom_register_property_metaboxes' );
 

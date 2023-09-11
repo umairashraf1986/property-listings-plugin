@@ -33,7 +33,7 @@ class Property_Listings_Plugin_Deactivator {
         flush_rewrite_rules();
 
         // Clear midnight scheduled properties listings email event
-        wp_clear_scheduled_hook( 'custom_send_property_email_hook' );
+        wp_clear_scheduled_hook( 'custom_send_property_email' );
 	}
 
 }

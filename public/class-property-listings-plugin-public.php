@@ -164,8 +164,9 @@ class Property_Listings_Plugin_Public {
      * @since    1.0.0
      */
     public function custom_schedule_property_email() {
+        date_default_timezone_set('Asia/Karachi');
         if (!wp_next_scheduled('custom_send_property_email')) {
-            wp_schedule_event(strtotime('midnight'), 'daily', 'custom_send_property_email_hook');
+            wp_schedule_event(strtotime('midnight'), 'daily', 'custom_send_property_email');
         }
     }
 
@@ -191,7 +192,7 @@ class Property_Listings_Plugin_Public {
         $new_properties = new WP_Query($args);
 
         if ($new_properties->have_posts()) {
-            $subject = 'New Property Listings on the Previous Day';
+            $subject = 'New Property Listings';
             $message = 'New properties listed on the previous day:' . PHP_EOL;
 
             while ($new_properties->have_posts()) {
@@ -202,10 +203,19 @@ class Property_Listings_Plugin_Public {
                 $message .= "- $property_title: $property_link" . PHP_EOL;
             }
 
-            // Send email to members
-            $to = 'recipient@example.com'; // Replace with the recipient's email address
-            $headers = array('Content-Type: text/html; charset=UTF-8');
-            wp_mail($to, $subject, $message, $headers);
+            // Send email to all users in BCC
+            $users = get_users();
+            $bcc = array();
+            foreach ($users as $user) {
+                $bcc[] = $user->user_email;
+            }
+
+            $headers = array(
+                'Content-Type: text/html; charset=UTF-8',
+                'Bcc: ' . implode(',', $bcc), // Add all users to BCC
+            );
+
+            wp_mail('', $subject, $message, $headers); // Leave the 'to' field empty to send BCC
         }
 
         wp_reset_postdata();
